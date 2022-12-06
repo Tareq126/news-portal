@@ -22,9 +22,14 @@ const toggleSpinner = isLoading => {
     if (isLoading) {
         loadingSection.classList.remove('d-none');
     }
+    else {
+        loadingSection.classList.add('d-none');
+    }
 }
 
 const categoryId = async category_id => {
+    // start spinner
+    toggleSpinner(true);
     const url = `https://openapi.programming-hero.com/api/news/category/${category_id} `;
     const res = await fetch(url);
     const data = await res.json();
@@ -33,12 +38,13 @@ const categoryId = async category_id => {
 
 
 const displayCategoryInfo = infos => {
+    document.getElementById('news-number').innerText = infos.length;
     const categoryNews = document.getElementById('category-news');
     categoryNews.textContent = ``;
+
     for (const info of infos) {
         const infoDiv = document.createElement('div');
-        // start spinner
-        toggleSpinner(true);
+
         infoDiv.innerHTML = `
         <div class="card mb-3" style="max-width: 840px;">
                 <div class="row g-0">
@@ -55,11 +61,11 @@ const displayCategoryInfo = infos => {
                 </div>
             </div> 
         `;
-        // stop spinner
-        toggleSpinner(false);
         categoryNews.appendChild(infoDiv);
 
     }
+    // stop spinner
+    toggleSpinner(false);
 }
 
 
@@ -74,34 +80,22 @@ const loadNewsDetails = async news_id => {
 
 const displayNewsDetails = newsDetails => {
     console.log(newsDetails);
-    const detailsNews = document.getElementById('detail-news');
-    detailsNews.innerHTML = `
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-          <img src="${newsDetails?.author.img}" class="img-fluid rounded-start" alt="...">
+    const detailsNews = document.getElementById('news');
+    detailsNews.textContent = ``;
+    const news = document.createElement('div');
+    news.innerHTML = `
+    <img src="${newsDetails?.author.img}" class="img-fluid rounded-start" alt="...">
           <h5>Writer: ${newsDetails?.author.name}</h5>
           <p>Published Date: ${newsDetails?.author.published_date} </p>
-          </div>
-          <div class="modal-footer">
           <p>Views: ${newsDetails?.total_view} </p>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    `;
+    `
+    detailsNews.appendChild(news);
 }
 
 
 loadNewsDetails();
 
-categoryId();
+categoryId("08");
 
 
 categories();
