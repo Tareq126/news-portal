@@ -12,9 +12,16 @@ const displayCategoryName = categories => {
         allCategoryName.innerHTML = `
         <button class="border-0 bg-white" onclick="categoryId('${category.category_id}')">${category.category_name}</button>
         `;
-        allCategory.appendChild(allCategoryName)
-
+        allCategory.appendChild(allCategoryName);
     });
+}
+
+
+const toggleSpinner = isLoading => {
+    const loadingSection = document.getElementById('spinner');
+    if (isLoading) {
+        loadingSection.classList.remove('d-none');
+    }
 }
 
 const categoryId = async category_id => {
@@ -24,11 +31,14 @@ const categoryId = async category_id => {
     displayCategoryInfo(data.data);
 }
 
+
 const displayCategoryInfo = infos => {
     const categoryNews = document.getElementById('category-news');
     categoryNews.textContent = ``;
     for (const info of infos) {
         const infoDiv = document.createElement('div');
+        // start spinner
+        toggleSpinner(true);
         infoDiv.innerHTML = `
         <div class="card mb-3" style="max-width: 840px;">
                 <div class="row g-0">
@@ -43,14 +53,17 @@ const displayCategoryInfo = infos => {
                         <button onclick="loadNewsDetails('${info._id}')" type="button" class="mb-2 px-5 rounded-3" data-bs-toggle="modal" data-bs-target="#exampleModal">Details</button>
                     </div>
                 </div>
-            </div>
-        
+            </div> 
         `;
-
+        // stop spinner
+        toggleSpinner(false);
         categoryNews.appendChild(infoDiv);
-    }
 
+    }
 }
+
+
+
 
 const loadNewsDetails = async news_id => {
     const url = `https://openapi.programming-hero.com/api/news/${news_id}`
@@ -83,10 +96,8 @@ const displayNewsDetails = newsDetails => {
     </div>
     
     `;
-
 }
 
-const allNews = 'https://openapi.programming-hero.com/api/news/category/08'
 
 loadNewsDetails();
 
