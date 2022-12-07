@@ -103,9 +103,9 @@ const displayNewsDetails = newsDetails => {
     const news = document.createElement('div');
     news.innerHTML = `
     <img src="${newsDetails?.author.img}" class="img-fluid rounded-start" alt="...">
-          <h5 class="mt-2">Writer: ${newsDetails?.author.name}</h5>
+          <h5 class="mt-2">Writer: ${newsDetails?.author.name ? newsDetails?.author.name : "No Data Found"}</h5>
           <p>Published Date: ${newsDetails?.author.published_date} </p>
-          <p>Views: ${newsDetails?.total_view} </p>
+          <p>Views: ${newsDetails?.total_view ? newsDetails?.total_view : "No Data Found"} </p>
     `
     detailsNews.appendChild(news);
 }
