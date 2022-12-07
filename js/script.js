@@ -1,8 +1,12 @@
 const categories = async () => {
     const url = 'https://openapi.programming-hero.com/api/news/categories'
-    const res = await fetch(url);
-    const data = await res.json();
-    displayCategoryName(data.data.news_category);
+    try {
+        const res = await fetch(url);
+        const data = await res.json();
+        displayCategoryName(data.data.news_category);
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 const displayCategoryName = categories => {
@@ -31,9 +35,14 @@ const categoryId = async category_id => {
     // start spinner
     toggleSpinner(true);
     const url = `https://openapi.programming-hero.com/api/news/category/${category_id} `;
-    const res = await fetch(url);
-    const data = await res.json();
-    displayCategoryInfo(data.data);
+    try {
+        const res = await fetch(url);
+        const data = await res.json();
+        displayCategoryInfo(data.data);
+
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 
@@ -78,9 +87,13 @@ const displayCategoryInfo = infos => {
 
 const loadNewsDetails = async news_id => {
     const url = `https://openapi.programming-hero.com/api/news/${news_id}`
-    const res = await fetch(url);
-    const data = await res.json();
-    displayNewsDetails(data.data[0]);
+    try {
+        const res = await fetch(url);
+        const data = await res.json();
+        displayNewsDetails(data.data[0]);
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 const displayNewsDetails = newsDetails => {
@@ -90,7 +103,7 @@ const displayNewsDetails = newsDetails => {
     const news = document.createElement('div');
     news.innerHTML = `
     <img src="${newsDetails?.author.img}" class="img-fluid rounded-start" alt="...">
-          <h5>Writer: ${newsDetails?.author.name}</h5>
+          <h5 class="mt-2">Writer: ${newsDetails?.author.name}</h5>
           <p>Published Date: ${newsDetails?.author.published_date} </p>
           <p>Views: ${newsDetails?.total_view} </p>
     `
