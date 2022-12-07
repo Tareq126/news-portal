@@ -38,7 +38,10 @@ const categoryId = async category_id => {
 
 
 const displayCategoryInfo = infos => {
-    document.getElementById('news-number').innerText = infos.length;
+    const itemCount = document.getElementById('item-count');
+    itemCount.innerHTML = `
+    <h5>${infos.length} Items Found</h5>
+    `
     const categoryNews = document.getElementById('category-news');
     categoryNews.textContent = ``;
 
@@ -46,17 +49,19 @@ const displayCategoryInfo = infos => {
         const infoDiv = document.createElement('div');
 
         infoDiv.innerHTML = `
-        <div class="card mb-3" style="max-width: 840px;">
+        <div class="card mb-3" style="max-width: 1400px;">
                 <div class="row g-0">
-                    <div class="col-md-4">
-                        <img src="${info.thumbnail_url}" class="img-fluid rounded-start" alt="...">
+                    <div class="col-lg-4 col-md-6 p-5">
+                        <img src="${info.thumbnail_url}" class="img-fluid" alt="...">
                     </div>
-                    <div class="col-md-8 text-center">
+                    <div class="col-lg-8 col-md-6 py-5">
                         <div class="card-body">
                             <h5 class="card-title">${info.title}</h5>
-                            <p class="card-text">Details: ${info.details.slice(0, 400)} </p>
+                            <p class="card-text cut-text">Details: ${info.details.slice(0, 500)}... </p>
                         </div>
-                        <button onclick="loadNewsDetails('${info._id}')" type="button" class="mb-2 px-5 rounded-3" data-bs-toggle="modal" data-bs-target="#exampleModal">Details</button>
+                       <div class="text-center">
+                       <button onclick="loadNewsDetails('${info._id}')" type="button" class="mb-2 px-5 rounded-3 text-center" data-bs-toggle="modal" data-bs-target="#exampleModal">Details</button>
+                       </div>
                     </div>
                 </div>
             </div> 
