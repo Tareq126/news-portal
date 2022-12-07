@@ -1,3 +1,4 @@
+//Load Category Name
 const categories = async () => {
     const url = 'https://openapi.programming-hero.com/api/news/categories'
     try {
@@ -9,6 +10,7 @@ const categories = async () => {
     }
 }
 
+//Display Category Name
 const displayCategoryName = categories => {
     const allCategory = document.getElementById('all-categories');
     categories.forEach(category => {
@@ -20,7 +22,7 @@ const displayCategoryName = categories => {
     });
 }
 
-
+//Toggle Spinner
 const toggleSpinner = isLoading => {
     const loadingSection = document.getElementById('spinner');
     if (isLoading) {
@@ -31,6 +33,7 @@ const toggleSpinner = isLoading => {
     }
 }
 
+//Category ID
 const categoryId = async category_id => {
     // start spinner
     toggleSpinner(true);
@@ -45,7 +48,7 @@ const categoryId = async category_id => {
     }
 }
 
-
+//Display Category News
 const displayCategoryInfo = infos => {
     const itemCount = document.getElementById('item-count');
     itemCount.innerHTML = `
@@ -84,7 +87,7 @@ const displayCategoryInfo = infos => {
 
 
 
-
+// Load News Details In Modal
 const loadNewsDetails = async news_id => {
     const url = `https://openapi.programming-hero.com/api/news/${news_id}`
     try {
@@ -96,6 +99,7 @@ const loadNewsDetails = async news_id => {
     }
 }
 
+// Display News Details In Modal
 const displayNewsDetails = newsDetails => {
     console.log(newsDetails);
     const detailsNews = document.getElementById('news');
@@ -110,11 +114,10 @@ const displayNewsDetails = newsDetails => {
     detailsNews.appendChild(news);
 }
 
-
+//Function Call
 loadNewsDetails();
 
 categoryId("08");
-
 
 categories();
 
